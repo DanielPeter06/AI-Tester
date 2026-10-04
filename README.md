@@ -5,7 +5,7 @@
     cd demo-app && python -m http.server 8000      # terminal 1
     cd tester && python collect.py http://localhost:8000   # terminal 2
 
-## Planted bugs in demo-app (your answer key)
+## Planted bugs in demo-app (answer key)
 1. Console error on load (undefined trackPageView)
 2. /pricing link is a 404
 3. Signup accepts empty/invalid email
