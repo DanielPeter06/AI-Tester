@@ -1,0 +1,110 @@
+{
+  "url": "http://localhost:8000",
+  "console_errors": [
+    "trackPageView is not defined"
+  ],
+  "failed_requests": [],
+  "broken_links": [
+    "404 /pricing"
+  ],
+  "a11y": [
+    {
+      "rule": "color-contrast",
+      "impact": "serious",
+      "help": "Elements must meet minimum color contrast ratio thresholds",
+      "count": 1
+    },
+    {
+      "rule": "image-alt",
+      "impact": "critical",
+      "help": "Images must have alternate text",
+      "count": 1
+    },
+    {
+      "rule": "landmark-one-main",
+      "impact": "moderate",
+      "help": "Document should have one main landmark",
+      "count": 1
+    },
+    {
+      "rule": "region",
+      "impact": "moderate",
+      "help": "All page content should be contained by landmarks",
+      "count": 8
+    }
+  ],
+  "elements": [
+    {
+      "i": 0,
+      "tag": "a",
+      "type": null,
+      "text": "Sign up",
+      "id": null,
+      "href": "#signup",
+      "labelled": false
+    },
+    {
+      "i": 1,
+      "tag": "a",
+      "type": null,
+      "text": "Pricing",
+      "id": null,
+      "href": "/pricing",
+      "labelled": false
+    },
+    {
+      "i": 2,
+      "tag": "a",
+      "type": null,
+      "text": "Tasks",
+      "id": null,
+      "href": "#tasks",
+      "labelled": false
+    },
+    {
+      "i": 3,
+      "tag": "input",
+      "type": "text",
+      "text": "Email",
+      "id": "email",
+      "href": null,
+      "labelled": false
+    },
+    {
+      "i": 4,
+      "tag": "button",
+      "type": "submit",
+      "text": "Sign up",
+      "id": "signup-btn",
+      "href": null,
+      "labelled": false
+    },
+    {
+      "i": 5,
+      "tag": "input",
+      "type": "text",
+      "text": "",
+      "id": "task",
+      "href": null,
+      "labelled": true
+    },
+    {
+      "i": 6,
+      "tag": "button",
+      "type": "submit",
+      "text": "Add",
+      "id": "add-btn",
+      "href": null,
+      "labelled": false
+    },
+    {
+      "i": 7,
+      "tag": "button",
+      "type": "submit",
+      "text": "Clear completed",
+      "id": "clear-btn",
+      "href": null,
+      "labelled": false
+    }
+  ]
+}

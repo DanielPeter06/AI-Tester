@@ -1,0 +1,47 @@
+[
+  {
+    "title": "Broken link to pricing page",
+    "type": "bug",
+    "severity": "high",
+    "confidence": "high",
+    "description": "The 'Pricing' navigation link results in a 404 error when accessed.",
+    "steps_to_reproduce": [
+      "Click on the 'Pricing' link in the top navigation bar."
+    ],
+    "evidence": "broken_links: ['404 /pricing']"
+  },
+  {
+    "title": "Sign-up form and task management controls are unresponsive",
+    "type": "bug",
+    "severity": "high",
+    "confidence": "high",
+    "description": "Submitting the sign-up form or adding new tasks produces no visible change or feedback on the page across all interaction attempts.",
+    "steps_to_reproduce": [
+      "Enter text into the email or task input fields.",
+      "Click 'Sign up' or 'Add'."
+    ],
+    "evidence": "Experiment log steps where click/fill actions result in 'text_changed: false' and 'html_changed: false'."
+  },
+  {
+    "title": "Reference error in console regarding tracking",
+    "type": "bug",
+    "severity": "medium",
+    "confidence": "high",
+    "description": "A JavaScript reference error occurs in the console stating that 'trackPageView is not defined'.",
+    "steps_to_reproduce": [
+      "Load the web application http://localhost:8000 and check the browser console."
+    ],
+    "evidence": "console_errors: ['trackPageView is not defined']"
+  },
+  {
+    "title": "Missing accessible labels on interactive form elements",
+    "type": "improvement",
+    "severity": "medium",
+    "confidence": "high",
+    "description": "Multiple interactive elements such as the email input, buttons, and navigation links lack proper accessible labels, failing accessibility standards.",
+    "steps_to_reproduce": [
+      "Run an accessibility audit on the page."
+    ],
+    "evidence": "elements list shows multiple items with 'labelled: false', including the email input, signup button, add button, and clear button."
+  }
+]

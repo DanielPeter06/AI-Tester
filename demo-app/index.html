@@ -41,6 +41,9 @@
 <script>
   // BUG: calls an undefined analytics function on load -> console error
   trackPageView('home');
+</script>
+<script>
+  // (separate script block so the error above doesn't stop the rest from running)
 
   // BUG: accepts empty / invalid email and still says success
   document.getElementById('signup-btn').onclick = () => {
