@@ -20,7 +20,10 @@ Rules:
 - Every finding MUST cite specific evidence (an exact error, status code, accessibility rule, or
   experiment step). If you cannot cite any, leave it out.
 - type: "bug" = broken or wrong; "improvement" = works but could be better.
-- Merge duplicates and closely related items into one finding.
+- Merge true duplicates only. Never combine a bug and an improvement into one finding, and keep
+  different accessibility problems (alt text, contrast, labels) as separate findings.
+- Also report improvements you can justify from the screenshots and logs, such as a missing empty-state
+  message, no confirmation after an action, or weak visual design.
 - confidence: "high" = directly shown by the evidence, "medium" = inferred, "low" = speculative.
 - severity: critical, high, medium or low. Write descriptions in plain English.
 - General signals to look for: a control that produces no visible change when used; invalid or empty
@@ -37,7 +40,9 @@ def main():
     prompt = PROMPT.replace("<<EVIDENCE>>", evidence).replace("<<EXPLORATION>>", exploration)
     print("Asking Gemini to triage...")
     result = ask_json(prompt, images=[OUT / "home.png", OUT / "explored.png"])
-    findings = sorted(result["findings"], key=lambda f: ORDER.get(f.get("severity"), 9))
+    items = result if isinstance(result, list) else result.get("findings", [])
+    findings = sorted([f for f in items if isinstance(f, dict)],
+                      key=lambda f: ORDER.get(f.get("severity"), 9))
     (OUT / "findings.json").write_text(json.dumps(findings, indent=2))
     for f in findings:
         print(f"[{f['severity']:8}] [{f['type']:11}] {f['title']}  ({f['confidence']})")

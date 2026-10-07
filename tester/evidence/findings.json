@@ -1,47 +1,92 @@
 [
   {
-    "title": "Broken link to pricing page",
+    "title": "Cross-Site Scripting (XSS) Vulnerability in Task Creation",
+    "type": "bug",
+    "severity": "critical",
+    "confidence": "high",
+    "description": "The task creation input field executes arbitrary HTML and JavaScript injected via task input, as demonstrated by the execution of a script trigger alert dialog.",
+    "steps_to_reproduce": [
+      "Type '<img src=x onerror=alert(1)>' into the 'New task' input field.",
+      "Click the 'Add' button."
+    ],
+    "evidence": "Experiment log round 1 shows a dialog '1' and console error resulting from resource loading when submitting the HTML/JS payload."
+  },
+  {
+    "title": "Broken Link for Pricing Navigation",
     "type": "bug",
     "severity": "high",
     "confidence": "high",
-    "description": "The 'Pricing' navigation link results in a 404 error when accessed.",
+    "description": "The 'Pricing' navigation link points to '/pricing', which returns a 404 Not Found error.",
     "steps_to_reproduce": [
-      "Click on the 'Pricing' link in the top navigation bar."
+      "Click on the 'Pricing' link in the top navigation menu."
     ],
-    "evidence": "broken_links: ['404 /pricing']"
+    "evidence": "Static evidence lists broken_links: ['404 /pricing']."
   },
   {
-    "title": "Sign-up form and task management controls are unresponsive",
-    "type": "bug",
-    "severity": "high",
-    "confidence": "high",
-    "description": "Submitting the sign-up form or adding new tasks produces no visible change or feedback on the page across all interaction attempts.",
-    "steps_to_reproduce": [
-      "Enter text into the email or task input fields.",
-      "Click 'Sign up' or 'Add'."
-    ],
-    "evidence": "Experiment log steps where click/fill actions result in 'text_changed: false' and 'html_changed: false'."
-  },
-  {
-    "title": "Reference error in console regarding tracking",
+    "title": "Uncaught ReferenceError in Console ('trackPageView')",
     "type": "bug",
     "severity": "medium",
     "confidence": "high",
-    "description": "A JavaScript reference error occurs in the console stating that 'trackPageView is not defined'.",
+    "description": "A JavaScript reference error occurs on the page due to an undefined 'trackPageView' function call.",
     "steps_to_reproduce": [
-      "Load the web application http://localhost:8000 and check the browser console."
+      "Load the page and check the browser developer console."
     ],
-    "evidence": "console_errors: ['trackPageView is not defined']"
+    "evidence": "Static evidence console_errors contains 'trackPageView is not defined'."
   },
   {
-    "title": "Missing accessible labels on interactive form elements",
+    "title": "Layout Overflow on Extremely Long Task Descriptions",
+    "type": "bug",
+    "severity": "medium",
+    "confidence": "high",
+    "description": "Entering extremely long task strings causes horizontal overflow on the page layout.",
+    "steps_to_reproduce": [
+      "Enter a very long text string into the 'New task' field.",
+      "Click 'Add'."
+    ],
+    "evidence": "Experiment log round 2 indicates 'horizontal_overflow: true' after adding a long task."
+  },
+  {
+    "title": "Missing Image Alternative Text",
+    "type": "bug",
+    "severity": "medium",
+    "confidence": "high",
+    "description": "Images on the page lack alternate text, failing accessibility standards.",
+    "steps_to_reproduce": [
+      "Run an accessibility audit (such as axe) against the page."
+    ],
+    "evidence": "Static evidence a11y audit lists rule 'image-alt' with critical impact and count 1."
+  },
+  {
+    "title": "Insufficient Color Contrast",
+    "type": "bug",
+    "severity": "medium",
+    "confidence": "high",
+    "description": "Certain text elements do not meet minimum color contrast ratio thresholds.",
+    "steps_to_reproduce": [
+      "Run an accessibility audit against the page colors."
+    ],
+    "evidence": "Static evidence a11y audit lists rule 'color-contrast' with serious impact."
+  },
+  {
+    "title": "Missing Main Landmark",
+    "type": "bug",
+    "severity": "low",
+    "confidence": "high",
+    "description": "The document lacks a main landmark container for accessibility.",
+    "steps_to_reproduce": [
+      "Inspect the HTML structure for a <main> landmark."
+    ],
+    "evidence": "Static evidence a11y audit lists rule 'landmark-one-main' with moderate impact."
+  },
+  {
+    "title": "Form Inputs Lacking Accessible Labels",
     "type": "improvement",
-    "severity": "medium",
+    "severity": "low",
     "confidence": "high",
-    "description": "Multiple interactive elements such as the email input, buttons, and navigation links lack proper accessible labels, failing accessibility standards.",
+    "description": "Several interactive input elements and buttons are missing explicit accessible labels or aria-labels.",
     "steps_to_reproduce": [
-      "Run an accessibility audit on the page."
+      "Inspect elements such as the email input, buttons, and sign up links using an accessibility inspector."
     ],
-    "evidence": "elements list shows multiple items with 'labelled: false', including the email input, signup button, add button, and clear button."
+    "evidence": "Static evidence element list indicates 'labelled: false' for multiple interactive elements."
   }
 ]

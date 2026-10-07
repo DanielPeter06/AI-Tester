@@ -5,7 +5,7 @@ from playwright.sync_api import sync_playwright
 from llm import ask_json
 
 OUT = pathlib.Path("evidence"); OUT.mkdir(exist_ok=True)
-ROUNDS, PER_ROUND = 2, 6
+ROUNDS, PER_ROUND = 2, 8
 SEL = "a,button,input,select,textarea,[onclick]"
 INVENTORY = """(sel) => [...document.querySelectorAll(sel)].map((e,i) => ({
   i, tag: e.tagName.toLowerCase(), type: e.type || null,
@@ -30,8 +30,11 @@ Actions already tried and what happened:
 Plan up to <<N>> NEW actions most likely to expose bugs. Think like a user who is careless
 or hostile: submit forms empty, enter invalid values, whitespace only, very long text
 (write out about 200 characters), special characters, HTML such as <img src=x onerror=alert(1)>,
-then click buttons to see whether they actually do anything. Fill a field BEFORE clicking its
-submit button. Do not click links that navigate away.
+then click buttons to see whether they actually do anything. Rules:
+(1) After filling a field, your NEXT action must click its submit button, before that field is
+filled again. (2) Click EVERY button at least once, including ones like Clear or Delete, and do it
+after creating state they should affect (for example add an item, tick its checkbox, then click
+Clear). (3) Do not click links that navigate away.
 Reply ONLY with JSON:
 {"actions":[{"action":"fill" or "click","index":<int>,"value":"<text, for fill only>","why":"<what you are probing>"}]}"""
 
@@ -58,7 +61,8 @@ def run(url):
             print(f"Round {rnd+1}: asking Gemini what to try...")
             plan = ask_json(fill(PLAN, TEXT=snap["text"], ELEMENTS=json.dumps(els),
                                  HISTORY=json.dumps(log[-12:]) or "none", N=PER_ROUND))
-            for a in plan.get("actions", [])[:PER_ROUND]:
+            actions = plan if isinstance(plan, list) else plan.get("actions", [])
+            for a in [x for x in actions if isinstance(x, dict) and "action" in x][:PER_ROUND]:
                 before = page.evaluate(SNAP); errors.clear(); dialogs.clear(); err = None
                 idx = int(a.get("index", -1))
                 try:
